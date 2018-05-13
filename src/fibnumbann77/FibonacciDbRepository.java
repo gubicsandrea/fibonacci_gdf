@@ -8,7 +8,10 @@ package fibnumbann77;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,4 +45,22 @@ public class FibonacciDbRepository implements FibonacciRepository{
                 Logger.getLogger(FibonacciDbRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    public List<FibPair> load() {
+        List<FibPair> pairs = new ArrayList<>();
+        try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fibonacci?user=root&password=root");
+                PreparedStatement stmt = con.prepareStatement("SELECT n, value FROM numbers")){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                FibPair pair = new FibPair(rs.getInt("n"), rs.getInt("value"));
+                pairs.add(pair);
+            }
+        } catch (SQLException ex) {
+                Logger.getLogger(FibonacciDbRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pairs;
+    }
+    
+    
 }

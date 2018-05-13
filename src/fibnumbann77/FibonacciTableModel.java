@@ -55,6 +55,6 @@ public class FibonacciTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         return columnNames[column];
-    }    
+    }
     
 }

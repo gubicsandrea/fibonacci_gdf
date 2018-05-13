@@ -30,6 +30,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -58,8 +59,10 @@ public class FibnumGUI extends JFrame{
 
     public FibnumGUI(String title) throws HeadlessException {
         super(title);
-        initComponents();
         ((FibonacciDbRepository) dbRepo).initDatabase();
+        numbers = dbRepo.load();
+        initComponents();
+        System.out.println(numbers);
     }
     
     private void initComponents(){
@@ -158,6 +161,7 @@ public class FibnumGUI extends JFrame{
             int fib = FibnumBANN77.computeFN(n);
             FibPair pair = new FibPair(n, fib);
             numbers.add(pair);
+            ((AbstractTableModel) tblModel).fireTableDataChanged();
             String message = n + ". fibonacci száma: " + fib;
             JOptionPane.showMessageDialog(null, message, "Eredmény", JOptionPane.INFORMATION_MESSAGE);
             dbRepo.save(pair);
