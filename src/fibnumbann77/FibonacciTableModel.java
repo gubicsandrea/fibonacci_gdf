@@ -16,7 +16,7 @@ public class FibonacciTableModel extends AbstractTableModel {
     
     private final String[] columnNames = {"Sorszám", "Eredmény"};
     
-    private List<FibPair> data;
+    private final List<FibPair> data;
 
     public FibonacciTableModel(List<FibPair> data) {
         this.data = data;

@@ -5,6 +5,7 @@
  */
 package fibnumbann77;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -48,6 +50,7 @@ public class FibnumGUI extends JFrame{
     private JProgressBar progressBar;
     private TableModel tblModel;
     private JTable tblNumbers;
+    private JScrollPane scrollPane;
     private JTabbedPane tabs;
     private JPanel panel1;
     private JPanel panel2;
@@ -99,12 +102,11 @@ public class FibnumGUI extends JFrame{
         tblModel = new FibonacciTableModel(numbers);
         tblNumbers = new JTable(tblModel);
         
-        
         tabs = new JTabbedPane();
         
         panel1 = new JPanel(new FlowLayout());
         panel2 = new JPanel(new FlowLayout());
-        panel3 = new JPanel(new FlowLayout());
+        panel3 = new JPanel(new BorderLayout());
         
         panel1.setPreferredSize(new Dimension(390, 390));
         panel2.setPreferredSize(new Dimension(390, 390));
@@ -117,7 +119,9 @@ public class FibnumGUI extends JFrame{
         
         panel2.add(btnAbout);
         
-        panel3.add(tblNumbers);
+        scrollPane = new JScrollPane(tblNumbers);
+        
+        panel3.add(scrollPane, BorderLayout.CENTER);
         
         tabs.addTab("Számítás", panel1);
         tabs.addTab("Előzmények", panel3);
