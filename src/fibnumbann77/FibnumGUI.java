@@ -16,8 +16,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
@@ -30,16 +32,22 @@ import javax.swing.event.ChangeListener;
  */
 public class FibnumGUI extends JFrame{
     
+    private FibonacciRepository dbRepo  = new FibonacciDbRepository();
+    
     private JLabel labelForSpnNumber;
     private SpinnerModel spinnerModel;
     private JSpinner spnNumber;
     private JButton btnCalculate;
     private JButton btnAbout;
     private JProgressBar progressBar;
+    private JTabbedPane tabs;
+    private JPanel panel1;
+    private JPanel panel2;
 
     public FibnumGUI(String title) throws HeadlessException {
         super(title);
         initComponents();
+        ((FibonacciDbRepository) dbRepo).initDatabase();
     }
     
     private void initComponents(){
@@ -78,12 +86,27 @@ public class FibnumGUI extends JFrame{
                 JOptionPane.showMessageDialog(null, message);
             }
         });
-         
-        add(labelForSpnNumber);
-        add(spnNumber);
-        add(btnCalculate);
-        add(btnAbout);
-        add(progressBar);
+        
+        
+        tabs = new JTabbedPane();
+        
+        panel1 = new JPanel(new FlowLayout());
+        panel2 = new JPanel(new FlowLayout());
+        
+        panel1.setPreferredSize(new Dimension(390, 390));
+        panel2.setPreferredSize(new Dimension(390, 390));
+        
+        panel1.add(labelForSpnNumber);
+        panel1.add(spnNumber);
+        panel1.add(btnCalculate);
+        panel1.add(progressBar);
+        
+        panel2.add(btnAbout);
+        
+        tabs.addTab("Számítás", panel1);
+        tabs.addTab("About", panel2);
+        
+        add(tabs);
         
         pack();
     }
@@ -114,6 +137,7 @@ public class FibnumGUI extends JFrame{
             int fib = FibnumBANN77.computeFN(n);
             String message = n + ". fibonacci száma: " + fib;
             JOptionPane.showMessageDialog(null, message, "Eredmény", JOptionPane.INFORMATION_MESSAGE);
+            dbRepo.save(n, fib);
             btnCalculate.setEnabled(true);
             progressBar.setValue(0);
         }
