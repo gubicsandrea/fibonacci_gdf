@@ -28,6 +28,7 @@ public class FibnumGUI extends JFrame{
     private SpinnerModel spinnerModel;
     private JSpinner spnNumber;
     private JButton btnCalculate;
+    private JButton btnAbout;
 
     public FibnumGUI(String title) throws HeadlessException {
         super(title);
@@ -54,9 +55,19 @@ public class FibnumGUI extends JFrame{
             }
         });
         
+        btnAbout = new JButton("About");
+        btnAbout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String message = FibnumBANN77.PROGRAM_NAME + " v" + FibnumBANN77.VERSION + System.lineSeparator() + "Készítette: " + FibnumBANN77.CREATOR;
+                JOptionPane.showMessageDialog(null, message);
+            }
+        });
+        
         add(labelForSpnNumber);
         add(spnNumber);
         add(btnCalculate);
+        add(btnAbout);
         
         pack();
     }

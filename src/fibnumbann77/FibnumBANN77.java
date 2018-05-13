@@ -10,6 +10,10 @@ package fibnumbann77;
  * @author Gubics Andrea
  */
 public class FibnumBANN77 {
+    
+    public static final String PROGRAM_NAME = "Fibonacci számok";
+    public static final int VERSION = 1;
+    public static final String CREATOR = "Gubics Andrea";
 
     
     /**
