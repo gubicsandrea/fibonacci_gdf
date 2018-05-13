@@ -5,6 +5,7 @@
  */
 package fibnumbann77;
 
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,39 +15,33 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author user
+ * @author Gubics Andrea
  */
 public class FibnumBANN77Test {
-    
-    public FibnumBANN77Test() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
-    /**
-     * Test of main method, of class FibnumBANN77.
-     */
     @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        FibnumBANN77.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testComputeFN1(){       
+        assertThat(FibnumBANN77.computeFN(1), is(1));  
+    }
+    
+    @Test
+    public void testComputeFn2(){
+         assertThat(FibnumBANN77.computeFN(2), is(1));
+    }
+    
+    @Test
+    public void computeFN3(){
+         assertThat(FibnumBANN77.computeFN(3), is(2));
+    }
+    
+    @Test
+    public void computeFN5(){
+         assertThat(FibnumBANN77.computeFN(5), is(5));
+    }
+    
+    @Test
+    public void computeFN9(){
+         assertThat(FibnumBANN77.computeFN(9), is(34));
     }
     
 }
