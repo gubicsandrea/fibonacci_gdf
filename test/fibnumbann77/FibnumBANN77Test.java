@@ -44,4 +44,19 @@ public class FibnumBANN77Test {
          assertThat(FibnumBANN77.computeFN(9), is(34));
     }
     
+    @Test
+    public void computeFN4(){
+         assertThat(FibnumBANN77.computeFN(4), is(3));
+    }
+    
+    @Test
+    public void computeFN6(){
+         assertThat(FibnumBANN77.computeFN(6), is(8));
+    }
+    
+    @Test
+    public void computeFN7(){
+         assertThat(FibnumBANN77.computeFN(9), is(13));
+    }
+    
 }
