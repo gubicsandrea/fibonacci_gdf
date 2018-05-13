@@ -12,7 +12,13 @@ package fibnumbann77;
 public class FibnumBANN77 {
 
     public static int computeFN(int N){
-        return 1;
+        if(N < 1){
+            throw new IllegalArgumentException("Argument must be greater than zero");
+        }
+        if(N == 1 || N == 2){
+            return 1;
+        }
+        return computeFN(N-1) + computeFN(N-2);
     }
     
 }
