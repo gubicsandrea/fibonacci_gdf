@@ -8,9 +8,12 @@ package fibnumbann77;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -41,6 +44,15 @@ public class FibnumGUI extends JFrame{
         spinnerModel = new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1);
         spnNumber = new JSpinner(spinnerModel);
         btnCalculate = new JButton("Csináld!");
+        btnCalculate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int n = (Integer) spnNumber.getValue();
+                int fib = FibnumBANN77.computeFN(n);
+                String message = n + ". fibonacci száma: " + fib;
+                JOptionPane.showMessageDialog(null, message, "Eredmény", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
         
         add(labelForSpnNumber);
         add(spnNumber);

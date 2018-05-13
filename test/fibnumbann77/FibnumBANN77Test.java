@@ -56,7 +56,7 @@ public class FibnumBANN77Test {
     
     @Test
     public void computeFN7(){
-         assertThat(FibnumBANN77.computeFN(9), is(13));
+         assertThat(FibnumBANN77.computeFN(7), is(13));
     }
     
 }
