@@ -19,7 +19,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 /**
- *
+ * main GUI for the Fibonacci program
  * @author user
  */
 public class FibnumGUI extends JFrame{
