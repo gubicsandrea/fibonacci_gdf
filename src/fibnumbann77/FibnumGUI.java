@@ -10,13 +10,19 @@ import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingWorker;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * main GUI for the Fibonacci program
@@ -29,6 +35,7 @@ public class FibnumGUI extends JFrame{
     private JSpinner spnNumber;
     private JButton btnCalculate;
     private JButton btnAbout;
+    private JProgressBar progressBar;
 
     public FibnumGUI(String title) throws HeadlessException {
         super(title);
@@ -45,13 +52,21 @@ public class FibnumGUI extends JFrame{
         spinnerModel = new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1);
         spnNumber = new JSpinner(spinnerModel);
         btnCalculate = new JButton("Csináld!");
+        progressBar = new JProgressBar();
         btnCalculate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int n = (Integer) spnNumber.getValue();
-                int fib = FibnumBANN77.computeFN(n);
-                String message = n + ". fibonacci száma: " + fib;
-                JOptionPane.showMessageDialog(null, message, "Eredmény", JOptionPane.INFORMATION_MESSAGE);
+                Worker worker = new Worker();
+                worker.addPropertyChangeListener(new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        if("progress".equals(evt.getPropertyName())){
+                            progressBar.setValue((Integer)evt.getNewValue());
+                        }
+                    }
+                });
+                btnCalculate.setEnabled(false);
+                worker.execute();
             }
         });
         
@@ -63,11 +78,12 @@ public class FibnumGUI extends JFrame{
                 JOptionPane.showMessageDialog(null, message);
             }
         });
-        
+         
         add(labelForSpnNumber);
         add(spnNumber);
         add(btnCalculate);
         add(btnAbout);
+        add(progressBar);
         
         pack();
     }
@@ -75,6 +91,35 @@ public class FibnumGUI extends JFrame{
     public static void main(String[] args) {
         FibnumGUI gui = new FibnumGUI("Fibonacci számok");
         gui.setVisible(true);
+    }
+    
+    class Worker extends SwingWorker<Void, Integer>{
+
+        @Override
+        protected Void doInBackground() throws Exception {
+            try{
+                for(int i = 20; i<= 100; i+=20){
+                    Thread.sleep(1000);
+                    setProgress(i);
+                }
+            } catch (InterruptedException ex){
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void done() {
+            int n = (Integer) spnNumber.getValue();
+            int fib = FibnumBANN77.computeFN(n);
+            String message = n + ". fibonacci száma: " + fib;
+            JOptionPane.showMessageDialog(null, message, "Eredmény", JOptionPane.INFORMATION_MESSAGE);
+            btnCalculate.setEnabled(true);
+            progressBar.setValue(0);
+        }
+        
+        
+        
     }
     
 }
