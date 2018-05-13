@@ -11,10 +11,19 @@ import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -141,6 +150,56 @@ public class FibnumGUI extends JFrame{
         
         add(tabs);
         
+        this.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                URL url = this.getClass().getResource("/application.properties");
+                File file = null;
+                try {
+                    file = new File(url.toURI());
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(FibnumGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try(OutputStream os = new FileOutputStream(file)){
+                    System.out.println("On closing");
+                    prop.setProperty("spinner.default", spinnerModel.getValue().toString());
+                    prop.store(os, "");
+                } catch (IOException ioex) {
+                    Logger.getLogger(FibnumGUI.class.getName()).log(Level.SEVERE, null, ioex);
+                }
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        
         pack();
     }
     
@@ -186,9 +245,7 @@ public class FibnumGUI extends JFrame{
             btnCalculate.setEnabled(true);
             progressBar.setValue(0);
         }
-        
-        
-        
+  
     }
     
 }
