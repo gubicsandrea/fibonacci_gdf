@@ -13,8 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,6 +48,8 @@ public class FibnumGUI extends JFrame{
     
     private List<FibPair> numbers = new ArrayList<>();
     
+    private Properties prop = new Properties();
+    
     private JLabel labelForSpnNumber;
     private SpinnerModel spinnerModel;
     private JSpinner spnNumber;
@@ -59,6 +66,7 @@ public class FibnumGUI extends JFrame{
 
     public FibnumGUI(String title) throws HeadlessException {
         super(title);
+        loadProperties();
         ((FibonacciDbRepository) dbRepo).initDatabase();
         numbers = dbRepo.load();
         initComponents();
@@ -72,7 +80,8 @@ public class FibnumGUI extends JFrame{
         this.setResizable(false);
         
         labelForSpnNumber = new JLabel("Fibonacci: ");
-        spinnerModel = new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1);
+        int spnNumberDefaultValue = Integer.parseInt(prop.getProperty("spinner.default", "1"));
+        spinnerModel = new SpinnerNumberModel(spnNumberDefaultValue,1,Integer.MAX_VALUE,1);
         spnNumber = new JSpinner(spinnerModel);
         btnCalculate = new JButton("Csináld!");
         progressBar = new JProgressBar();
@@ -133,6 +142,15 @@ public class FibnumGUI extends JFrame{
         add(tabs);
         
         pack();
+    }
+    
+    private void loadProperties(){
+        try {
+            InputStream is = this.getClass().getResourceAsStream("/application.properties");
+            prop.load(is);
+        } catch (IOException ex) {
+            Logger.getLogger(FibnumGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void main(String[] args) {
