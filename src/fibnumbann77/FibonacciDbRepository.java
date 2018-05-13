@@ -32,11 +32,11 @@ public class FibonacciDbRepository implements FibonacciRepository{
     }
 
     @Override
-    public void save(int n, int value) {
+    public void save(FibPair pair) {
         try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fibonacci?user=root&password=root");
                 PreparedStatement stmt = con.prepareStatement("INSERT INTO numbers (n, value) values (?,?)")){
-            stmt.setInt(1, n);
-            stmt.setInt(2, value);
+            stmt.setInt(1, pair.getN());
+            stmt.setInt(2, pair.getValue());
             stmt.executeUpdate();
         } catch (SQLException ex) {
                 Logger.getLogger(FibonacciDbRepository.class.getName()).log(Level.SEVERE, null, ex);

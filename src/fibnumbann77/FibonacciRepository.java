@@ -10,5 +10,5 @@ package fibnumbann77;
  * @author user
  */
 public interface FibonacciRepository {
-    void save(int n, int value);
+    void save(FibPair pair);
 }
