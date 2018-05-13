@@ -7,7 +7,7 @@ package fibnumbann77;
 
 /**
  *
- * @author user
+ * @author Gubics Andrea
  */
 public class FibnumBANN77 {
 
