@@ -5,6 +5,7 @@
  */
 package fibnumbann77;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -12,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author user
  */
-public class FibonacciTableModel extends AbstractTableModel {
+public class FibonacciTableModel extends AbstractTableModel implements Serializable{
     
     private final String[] columnNames = {"Sorszám", "Eredmény"};
     

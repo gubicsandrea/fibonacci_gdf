@@ -44,6 +44,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -54,6 +56,7 @@ import javax.swing.table.TableModel;
 public class FibnumGUI extends JFrame{
     
     private FibonacciRepository dbRepo  = new FibonacciDbRepository();
+    private FibonacciFileRepository fileRepo = new FibonacciFileRepository();
     
     private List<FibPair> numbers = new ArrayList<>();
     
@@ -121,6 +124,12 @@ public class FibnumGUI extends JFrame{
         });
         
         tblModel = new FibonacciTableModel(numbers);
+        tblModel.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                fileRepo.save(tblModel);
+            }
+        });
         tblNumbers = new JTable(tblModel);
         
         tabs = new JTabbedPane();

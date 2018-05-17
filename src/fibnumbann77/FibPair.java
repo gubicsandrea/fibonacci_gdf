@@ -5,11 +5,13 @@
  */
 package fibnumbann77;
 
+import java.io.Serializable;
+
 /**
  *
  * @author user
  */
-public class FibPair {
+public class FibPair implements Serializable{
     private int n;
     private int value;
 
