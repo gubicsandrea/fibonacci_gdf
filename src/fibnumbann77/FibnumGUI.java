@@ -122,8 +122,13 @@ public class FibnumGUI extends JFrame{
                 JOptionPane.showMessageDialog(null, message);
             }
         });
-        
-        tblModel = new FibonacciTableModel(numbers);
+        try{
+            tblModel = (FibonacciTableModel) fileRepo.load();
+            numbers = ((FibonacciTableModel)tblModel).getData();
+        } catch (Exception ex) {
+            Logger.getLogger(FibnumGUI.class.getName()).log(Level.SEVERE, null, ex);
+            tblModel = new FibonacciTableModel(numbers);
+        }     
         tblModel.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {

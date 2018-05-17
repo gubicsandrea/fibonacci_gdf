@@ -15,6 +15,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public class FibonacciTableModel extends AbstractTableModel implements Serializable{
     
+    public final static int serialVersionUID = 1;
+    
     private final String[] columnNames = {"Sorszám", "Eredmény"};
     
     private final List<FibPair> data;
@@ -57,5 +59,9 @@ public class FibonacciTableModel extends AbstractTableModel implements Serializa
     public String getColumnName(int column) {
         return columnNames[column];
     }
-    
+
+    public List<FibPair> getData() {
+        return data;
+    }
+ 
 }

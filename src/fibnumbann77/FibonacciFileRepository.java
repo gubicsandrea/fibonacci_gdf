@@ -36,5 +36,11 @@ public class FibonacciFileRepository {
         
     }
 
+    public TableModel load() throws ClassNotFoundException, FileNotFoundException, IOException {
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))){
+            return (FibonacciTableModel) ois.readObject();
+        }
+    }
+    
     
 }
